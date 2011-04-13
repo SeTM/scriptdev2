@@ -447,14 +447,15 @@ void ScriptedAI::SetEquipmentSlots(bool bLoadDefault, int32 uiMainHand, int32 ui
     }
 
     if (uiMainHand >= 0)
-        m_creature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 0, uint32(uiMainHand));
+        m_creature->SetUInt32Value(VIRTUAL_ITEM_SLOT_0, uint32(uiMainHand));
 
     if (uiOffHand >= 0)
-        m_creature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1, uint32(uiOffHand));
+        m_creature->SetUInt32Value(VIRTUAL_ITEM_SLOT_1, uint32(uiOffHand));
 
     if (uiRanged >= 0)
-        m_creature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 2, uint32(uiRanged));
+        m_creature->SetUInt32Value(VIRTUAL_ITEM_SLOT_2, uint32(uiRanged));
 }
+
 
 void ScriptedAI::SetCombatMovement(bool bCombatMove)
 {

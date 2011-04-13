@@ -93,7 +93,7 @@ struct MANGOS_DLL_DECL npc_shadowfang_prisonerAI : public npc_escortAI
                 break;
             case 12:
                 if (m_uiNpcEntry != NPC_ASH)
-                    m_creature->HandleEmote(EMOTE_ONESHOT_USESTANDING);
+                    //m_creature->HandleEmote(EMOTE_ONESHOT_USESTANDING);
                 break;
             case 13:
                 if (m_uiNpcEntry == NPC_ASH)

@@ -438,7 +438,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
             return;
 
         // All and only the Onyxia Deep Breath Spells have these visuals
-        if (pSpell->SpellVisual[0] == SPELL_VISUAL_BREATH_A || pSpell->SpellVisual[0] == SPELL_VISUAL_BREATH_B)
+        if (pSpell->SpellVisual == SPELL_VISUAL_BREATH_A || pSpell->SpellVisual == SPELL_VISUAL_BREATH_B)
             m_pInstance->SetData(TYPE_ONYXIA, DATA_PLAYER_TOASTED);
     }
 };

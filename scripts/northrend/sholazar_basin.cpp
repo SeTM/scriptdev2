@@ -123,7 +123,7 @@ bool QuestAccept_npc_injured_rainspeaker(Player* pPlayer, Creature* pCreature, c
         if (npc_injured_rainspeakerAI* pEscortAI = dynamic_cast<npc_injured_rainspeakerAI*>(pCreature->AI()))
         {
             pEscortAI->Start(true, pPlayer->GetGUID(), pQuest);
-            //pCreature->SetFactionTemporary(FACTION_ESCORT_N_NEUTRAL_PASSIVE, TEMPFACTION_RESTORE_RESPAWN);
+            pCreature->SetFactionTemporary(FACTION_ESCORT_N_NEUTRAL_PASSIVE, TEMPFACTION_RESTORE_RESPAWN);
         }
     }
 
