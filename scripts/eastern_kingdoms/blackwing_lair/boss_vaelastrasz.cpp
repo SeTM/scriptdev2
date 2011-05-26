@@ -31,6 +31,7 @@ enum
     SAY_LINE_3                  = -1469028,
     SAY_HALFLIFE                = -1469029,
     SAY_KILLTARGET              = -1469030,
+    SAY_NEFARIUS_CORRUPT        = -1469006,                   //when he corrupts Vaelastrasz; possible to start the event by arrea trigger id = 3626
 
     SPELL_ESSENCE_OF_THE_RED    = 23513,
     SPELL_FLAME_BREATH          = 23461,
@@ -266,10 +267,10 @@ bool GossipSelect_boss_vaelastrasz(Player* pPlayer, Creature* pCreature, uint32 
 bool GossipHello_boss_vaelastrasz(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-    pPlayer->SEND_GOSSIP_MENU(907, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(907, pCreature->GetObjectGuid());
 
     return true;
 }

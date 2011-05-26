@@ -20,6 +20,11 @@ ScriptedAI::ScriptedAI(Creature* pCreature) : CreatureAI(pCreature),
     m_uiEvadeCheckCooldown(2500)
 {}
 
+void ScriptedAI::GetAIInformation(ChatHandler& reader)
+{
+    reader.PSendSysMessage("ScriptedAI, combat movement is %s", reader.GetOnOffStr(m_bCombatMovement));
+}
+
 bool ScriptedAI::IsVisible(Unit* pWho) const
 {
     if (!pWho)
@@ -383,7 +388,7 @@ void ScriptedAI::DoTeleportPlayer(Unit* pUnit, float fX, float fY, float fZ, flo
 
     if (pUnit->GetTypeId() != TYPEID_PLAYER)
     {
-        error_log("SD2: Creature " UI64FMTD " (Entry: %u) Tried to teleport non-player unit (Type: %u GUID: " UI64FMTD ") to x: %f y:%f z: %f o: %f. Aborted.", m_creature->GetGUID(), m_creature->GetEntry(), pUnit->GetTypeId(), pUnit->GetGUID(), fX, fY, fZ, fO);
+        error_log("SD2: %s tried to teleport non-player (%s) to x: %f y:%f z: %f o: %f. Aborted.", m_creature->GetGuidStr().c_str(), pUnit->GetGuidStr().c_str(), fX, fY, fZ, fO);
         return;
     }
 
@@ -521,6 +526,11 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
 
     EnterEvadeMode();
     return true;
+}
+
+void Scripted_NoMovementAI::GetAIInformation(ChatHandler& reader)
+{
+    reader.PSendSysMessage("Subclass of Scripted_NoMovementAI");
 }
 
 void Scripted_NoMovementAI::AttackStart(Unit* pWho)

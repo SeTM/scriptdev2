@@ -59,7 +59,7 @@ struct MANGOS_DLL_DECL npc_forest_frogAI : public ScriptedAI
             uint32 cEntry = 0;
             switch(urand(0, 10))
             {
-                case 0: cEntry = 24024; break;              //Kraz
+                case 0: cEntry = 24024; break;              //Kraz      // wrong here?
                 case 1: cEntry = 24397; break;              //Mannuth
                 case 2: cEntry = 24403; break;              //Deez
                 case 3: cEntry = 24404; break;              //Galathryn
@@ -143,7 +143,7 @@ struct MANGOS_DLL_DECL npc_harrison_jones_zaAI : public npc_escortAI
             case 1:
                 DoScriptText(SAY_AT_GONG, m_creature);
 
-                if (GameObject* pEntranceDoor = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(DATA_GO_GONG)))
+                if (GameObject* pEntranceDoor = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(GO_STRANGE_GONG)))
                     pEntranceDoor->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
 
                 //Start bang gong for 2min
@@ -183,12 +183,12 @@ bool GossipHello_npc_harrison_jones_za(Player* pPlayer, Creature* pCreature)
     ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
 
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pInstance && pInstance->GetData(TYPE_EVENT_RUN) == NOT_STARTED)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_BEGIN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     return true;
 }
 
@@ -223,7 +223,7 @@ bool GOUse_go_strange_gong(Player* pPlayer, GameObject* pGo)
 
     if (pInstance->GetData(TYPE_EVENT_RUN) == SPECIAL)
     {
-        if (Creature* pCreature = pGo->GetMap()->GetCreature(pInstance->GetData64(DATA_HARRISON)))
+        if (Creature* pCreature = pGo->GetMap()->GetCreature(pInstance->GetData64(NPC_HARRISON)))
         {
             if (npc_harrison_jones_zaAI* pHarrisonAI = dynamic_cast<npc_harrison_jones_zaAI*>(pCreature->AI()))
                 pHarrisonAI->SetHoldState(false);
