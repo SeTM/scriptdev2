@@ -8,6 +8,8 @@
 enum
 {
     MAX_ENCOUNTER           = 6,
+    MAX_RELIC_DOORS         = 12,
+
     TYPE_RING_OF_LAW        = 1,
     TYPE_VAULT              = 2,
     TYPE_BAR                = 3,
@@ -23,8 +25,10 @@ enum
     NPC_VILEREL             = 9036,
     NPC_GLOOMREL            = 9037,
     NPC_SEETHREL            = 9038,
-    NPC_DOOMREL             = 9039,
+    // NPC_DOOMREL          = 9039,
     NPC_DOPEREL             = 9040,
+    NPC_WATCHER_DOOMGRIP    = 9476,
+    NPC_WARBRINGER_CONST    = 8905,                         // Four of them in Relict Vault are related to Doomgrip summon event
 
     GO_ARENA_1              = 161525,
     GO_ARENA_2              = 161522,
@@ -48,6 +52,9 @@ enum
     GO_SPECTRAL_CHALICE     = 164869,
     GO_CHEST_SEVEN          = 169243,
     GO_ARENA_SPOILS         = 181074,
+    GO_SECRET_DOOR          = 174553,
+
+    SPELL_STONED            = 10255,                        // Aura of Warbringer Constructs in Relict Vault
 };
 
 enum ArenaNPCs
@@ -88,6 +95,9 @@ static const uint32 aArenaNPCs[] =
     NPC_GOROSH, NPC_GRIZZLE, NPC_EVISCERATOR, NPC_OKTHOR, NPC_ANUBSHIAH, NPC_HEDRUM
 };
 
+// Used to summon Watcher Doomgrip
+static const float aVaultPositions[4] = {821.905f, -338.382f, -50.134f, 3.78736f};
+
 class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
 {
     public:
@@ -97,11 +107,11 @@ class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
         void Initialize();
 
         void OnCreatureCreate(Creature* pCreature);
+        void OnCreatureDeath(Creature* pCreature);
         void OnObjectCreate(GameObject* pGo);
 
         void SetData(uint32 uiType, uint32 uiData);
         uint32 GetData(uint32 uiType);
-        uint64 GetData64(uint32 uiData);
 
         const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
@@ -115,42 +125,12 @@ class MANGOS_DLL_DECL instance_blackrock_depths : public ScriptedInstance
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
 
-        uint64 m_uiEmperorGUID;
-        uint64 m_uiPrincessGUID;
-        uint64 m_uiPhalanxGUID;
-        uint64 m_uiHaterelGUID;
-        uint64 m_uiAngerrelGUID;
-        uint64 m_uiVilerelGUID;
-        uint64 m_uiGloomrelGUID;
-        uint64 m_uiSeethrelGUID;
-        uint64 m_uiDoomrelGUID;
-        uint64 m_uiDoperelGUID;
-
-        uint64 m_uiGoArena1GUID;
-        uint64 m_uiGoArena2GUID;
-        uint64 m_uiGoArena3GUID;
-        uint64 m_uiGoArena4GUID;
-        uint64 m_uiGoShadowLockGUID;
-        uint64 m_uiGoShadowMechGUID;
-        uint64 m_uiGoShadowGiantGUID;
-        uint64 m_uiGoShadowDummyGUID;
-        uint64 m_uiGoBarKegGUID;
-        uint64 m_uiGoBarKegTrapGUID;
-        uint64 m_uiGoBarDoorGUID;
-        uint64 m_uiGoTombEnterGUID;
-        uint64 m_uiGoTombExitGUID;
-        uint64 m_uiGoLyceumGUID;
-        uint64 m_uiGoGolemNGUID;
-        uint64 m_uiGoGolemSGUID;
-        uint64 m_uiGoThroneGUID;
-
-        uint64 m_uiSpectralChaliceGUID;
-        uint64 m_uiSevensChestGUID;
-        uint64 m_uiArenaSpoilsGUID;
-
         uint32 m_uiBarAleCount;
+        uint8 m_uiCofferDoorsOpened;
 
         float m_fArenaCenterX, m_fArenaCenterY, m_fArenaCenterZ;
+
+        GUIDSet m_sVaultNpcGuids;
 };
 
 #endif

@@ -22,8 +22,7 @@ ScriptedAI::ScriptedAI(Creature* pCreature) : CreatureAI(pCreature),
 
 void ScriptedAI::GetAIInformation(ChatHandler& reader)
 {
-    // TODO Uncomment this after add GetOnOffStr into mangos one
-    /*reader.PSendSysMessage("ScriptedAI, combat movement is %s", reader.GetOnOffStr(m_bCombatMovement));*/
+    reader.PSendSysMessage("ScriptedAI, combat movement is %s", reader.GetOnOffStr(m_bCombatMovement));
 }
 
 bool ScriptedAI::IsVisible(Unit* pWho) const
@@ -531,8 +530,7 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
 
 void Scripted_NoMovementAI::GetAIInformation(ChatHandler& reader)
 {
-    // TODO remove this after added PSendSysMessage into mangos one
-    //reader.PSendSysMessage("Subclass of Scripted_NoMovementAI");
+    reader.PSendSysMessage("Subclass of Scripted_NoMovementAI");
 }
 
 void Scripted_NoMovementAI::AttackStart(Unit* pWho)
