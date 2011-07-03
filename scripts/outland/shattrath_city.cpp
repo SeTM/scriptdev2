@@ -426,6 +426,7 @@ struct MANGOS_DLL_DECL npc_khadgars_servantAI : public npc_escortAI
         m_uiTalkCount = 0;
         m_uiPointId = 0;
         m_uiRandomTalkCooldown = 0;
+        m_creature->SetSpeedRate(MOVE_RUN, 1.5f);
     }
 
     void MoveInLineOfSight(Unit* pWho)
