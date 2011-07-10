@@ -26,6 +26,7 @@ EndScriptData
 #include "escort_ai.h"
 #include "ObjectMgr.h"
 #include "GameEventMgr.h"
+#include "GuildMgr.h"
 
 /* ContentData
 npc_air_force_bots       80%    support for misc (invisible) guard bots in areas where player allowed to fly. Summon guards after a preset time if tagged by spell
@@ -1700,6 +1701,35 @@ bool GossipSelect_npc_locksmith(Player* pPlayer, Creature* pCreature, uint32 uiS
     return true;
 }
 
+/*######
+## npc_guild_house_keeper
+######*/
+
+#define GOSSIP_TELEPORT_TO_GH "I am ready to be teleported to Guild House."
+
+bool GossipHello_npc_guild_house_keeper(Player* pPlayer, Creature* pCreature)
+{
+
+    if (pPlayer && pPlayer->GetGuildId() && GetGuildHouseCoorditates(pPlayer->GetGuildId()))
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_TELEPORT_TO_GH, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
+    return true;
+}
+
+bool GossipSelect_npc_guild_house_keeper(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+{
+    if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
+    {
+        GuildHousePosition const *pos = GetGuildHouseCoorditates(pPlayer->GetGuildId());
+        pPlayer->CLOSE_GOSSIP_MENU();
+        if (!pos)
+            return false;
+        pPlayer->TeleportTo(pos->target_mapId, pos->target_X, pos->target_Y, pos->target_Z, 0);
+    }
+    return true;
+}
+
 void AddSC_npcs_special()
 {
     Script* newscript;
@@ -1788,5 +1818,11 @@ void AddSC_npcs_special()
     newscript->Name = "npc_locksmith";
     newscript->pGossipHello =  &GossipHello_npc_locksmith;
     newscript->pGossipSelect = &GossipSelect_npc_locksmith;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "npc_guild_house_keeper";
+    newscript->pGossipHello =  &GossipHello_npc_guild_house_keeper;
+    newscript->pGossipSelect = &GossipSelect_npc_guild_house_keeper;
     newscript->RegisterSelf();
 }
